@@ -16,6 +16,14 @@ The codebase is organized around scripts in the `scripts/` folder, with a Docker
 - Distillation: teacher logits from CheXFound, EVA-X, or teacher ensemble.
 - Evaluation: per-class AUROC, macro AUROC, and bootstrap confidence intervals.
 
+## Credits
+- Parts of this implementation are adapted from the Grand X-Ray SLAM competition repository by Mohamed Masry:
+    https://github.com/Masry5/Grand-X-Ray-Slam-competition
+- Pretrained model weights used in this project:
+    - [CheXFound weights](https://www.kaggle.com/datasets/masry1/all-data-chexfound-recs-xray-div-a-models/data)
+    - [EVA-X weights](https://www.kaggle.com/datasets/masry1/evax-448-models-div-a)
+
+
 ## Repository Layout
 
 ```text
@@ -118,7 +126,6 @@ Then execute commands from inside the container, for example:
 python scripts/train_student.py -m eidf -y config.yaml -t ensemble
 ```
 
-Note: the current Docker base image uses CUDA 12.1 runtime (`pytorch/pytorch:2.1.0-cuda12.1-cudnn8-runtime`) while project prerequisites mention CUDA 12.4. Keep host driver/runtime compatibility in mind.
 
 ## Quick Start
 
@@ -249,16 +256,6 @@ python scripts/ensemble_evaluation.py
 - `scripts/model_initialization.py`: Model setup helpers.
 - `loss/student_loss.py`, `loss/loss_chexfound.py`: KD and related losses.
 
-## Related Notebooks
-
-From Kaggle winners' workflows used as inspiration:
-
-1. Preprocessing: `600-p-div-a.ipynb`
-2. EVA-X base model: `evax-recs-448-div-a.ipynb`
-3. CheXFound model:
-     - `all-data-chexfoundrecs-div-a_3.ipynb`
-     - `all-data-chexfound-recs-div-a_6.ipynb`
-4. Inference and ensembling: `all-models-inference-div-a.ipynb`
 
 ## Troubleshooting
 
