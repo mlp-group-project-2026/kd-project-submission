@@ -1,0 +1,65 @@
+# ──────────────────────────────────────────────
+# Training hyperparameters
+# ──────────────────────────────────────────────
+training:
+  model_name: "mobilevit_v2_050"   # "mobilenet_v3_small" | "mobilevit_v2_050"
+  img_size: 512
+  batch_size: 64
+  num_epochs: 10
+  lr: 0.001
+  optimizer: "adam"                   # "adam" | "adamw" | "sgd"
+  scheduler_factor: 0.5
+  scheduler_patience: 2
+  # Performance tuning
+  train_prefetch_factor: 4
+  val_prefetch_factor: 2
+  validate_every: 1                    # set to 2 or 3 for faster epochs
+  use_fast_augs: false                 # true = lighter augmentations (faster CPU pipeline)
+  use_channels_last: true
+  use_torch_compile: false             # can be true on PyTorch 2.x for extra speed
+  torch_compile_mode: "default"       # "default" | "reduce-overhead" | "max-autotune"
+  # Distillation
+  use_teacher_logits: true
+  alpha: [0.5]
+  beta: 0.0
+  temperature: [4.0]
+  # Focal loss
+  use_focal: True
+  focal_gamma: 1.0
+
+# ──────────────────────────────────────────────
+# Teacher logits shortcuts
+# Each entry maps a short name to a CSV filename
+# (resolved relative to the machine's data_path)
+# ──────────────────────────────────────────────
+teachers:
+  synthetic: "train1-mini-synthetic-logits.csv"
+  chexfound: "chexfound_e6_tuning_logits.csv"
+  evax: "train1-evax-logits.csv"
+  ensemble: ["ema_model_f5_fullset_chexfound_logits_list.csv", 
+            "ema_model_f6_fullset_chexfound_logits_list.csv", 
+            "ema_model_f5_fullset_evax_logits_list.csv", 
+            "ema_model_f6_fullset_evax_logits_list.csv"]
+
+# ──────────────────────────────────────────────
+# Machine-specific paths
+# ──────────────────────────────────────────────
+machines:
+  eidf:
+    data_path: "/home/mlp_project/data/xray-slam-data"
+    train_csv: "grand-xray-slam-division-a/train1.csv"
+    val_csv: "grand-xray-slam-division-b/val2.csv"
+    img_dir: "grand-xray-slam-division-a/train1"
+    val_img_dir: "grand-xray-slam-division-b/val2"
+
+    teacher_logits_path: "/home/mlp_project/kd-project/experiments/teacher_inference/outputs/full_train_set"
+    train_csv: "grand-xray-slam-division-a-mini/train1-mini.csv"
+    val_csv: "grand-xray-slam-division-b-mini/train2-mini.csv"
+    img_dir: "grand-xray-slam-division-a-mini/train1-mini"
+    val_img_dir: "grand-xray-slam-division-b-mini/train2-mini"
+
+    save_dir: "/home/mlp_project/kd-project/experiments/kd-ensemble/outputs/training_set_run2" 
+    
+    num_workers: 14
+
+

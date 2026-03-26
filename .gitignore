@@ -4,7 +4,6 @@
 *__pycache__
 /data/
 *.pt
-config.yaml
 logs/
 output/
 model/mobilenet_v3_small/
@@ -14,7 +13,6 @@ jobs/
 configs/
 *.csv
 *.json
-# *.yaml
 *.log
 *.wandb
 latest-run
