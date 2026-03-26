@@ -1,0 +1,25 @@
+*.jpg
+*.xlsx
+*.pth
+*__pycache__
+/data/
+*.pt
+config.yaml
+logs/
+output/
+model/mobilenet_v3_small/
+model/mobilevit_v2_0.5/
+jobs/
+# experiments/
+configs/
+*.csv
+*.json
+# *.yaml
+*.log
+*.wandb
+latest-run
+requirements.txt
+experiments_eidf/
+wandb/
+# IMPORTANT_COMMANDS.txt
+IMPORTANT_COMMANDS.txt
